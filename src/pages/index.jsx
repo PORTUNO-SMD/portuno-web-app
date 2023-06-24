@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useState } from 'react';
 import Style from '../styles/Start.module.css';
+import Cookies from 'js-cookie';
+
 
 const StartPage = () => {
   const router = useRouter();
@@ -9,7 +11,6 @@ const StartPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const matricula = event.target.elements.matricula.value;
     const password = event.target.elements.password.value;
 
@@ -23,10 +24,10 @@ const StartPage = () => {
       });
 
       const data = await response.json();
-      console.log(data);
-
       if (data.authorization) {
-        router.push('/home');
+        Cookies.set('sessionToken', data.user.id);
+        console.log(data);
+        router.push('Home');
       } else {
         setErrorMessage(data.message);
         setTimeout(() => {
