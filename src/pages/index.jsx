@@ -25,8 +25,10 @@ const StartPage = () => {
 
       const data = await response.json();
       if (data.authorization) {
-        Cookies.set('sessionToken', data.user.id);
-        console.log(data);
+        Cookies.set('sessionToken', data.authorization);
+        Cookies.set('sessionUserId', data.user.id);
+        Cookies.set('sessionUserName', data.user.name);
+        Cookies.set('sessionUserType', data.user.isProfessor ? "professor" : "user");
         router.push('Home');
       } else {
         setErrorMessage(data.message);

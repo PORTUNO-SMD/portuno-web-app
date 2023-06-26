@@ -1,0 +1,86 @@
+.Container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 30px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+
+}
+
+.roomItem {
+    display: inline-flex;
+    padding: 20px 30px 30px 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    border-radius: 15px;
+    background: #FFF;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 768px) {
+    .Container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+
+    .roomItem {
+        display: inline-flex;
+        padding: 20px 30px 30px 30px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+        box-shadow: none;
+    }
+}
+
+.nameRoom {
+    text-align: center;
+}
+
+.roomDetails {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.occupiedStatus,
+.avaliableStatus {
+    display: flex;
+    padding: 5px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.occupiedStatus {
+    border-radius: 50px;
+    background: #F00;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 1.25px;
+}
+
+.showDetails {
+    color: #2565DC;
+}
+
+
+.avaliableStatus {
+    border-radius: 50px;
+    background: #12D68F;
+    color: #000;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 1.25px;
+}
