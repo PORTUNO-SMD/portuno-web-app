@@ -69,37 +69,77 @@
 
 .Header {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-flow: column;
+    justify-content: space-between;
+    gap: 15px;
     margin-inline: 50px;
+}
+
+.groupLogoMenu {
+    display: flex;
+    flex-direction: column;
 }
 
 .Logo {
     display: flex;
-    align-self: center;
+    align-self: flex-start;
+    margin-top: 25px;
 }
+
+.Nav {
+    display: flex;
+    flex-direction: row;
+}
+
+.menuNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.menuOpts {
+    display: flex;
+    gap: 40px;
+}
+
+.menuOpts li a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 16px 0px;
+    color: #000;
+}
+
+.menuOpts li a:hover {
+    color: #2565DC;
+}
+
+.menuOpts li {
+    list-style: none;
+}
+
 .selectFloor {
     display: flex;
-    align-self: flex-start;
+    align-self: center;
 }
 
-.selectFloor select {
-    padding-inline: 8px;
-    border: 0px solid transparent;
-    border-radius: 4px;
-    background-color: transparent;
-    font-weight: 800;
-    font-size: 25px;
+.radioButton {
+    display: none;
 }
 
-.selectFloor option {
-    font-weight: 800;
-    font-size: 16px;
+.radioButtonLabel {
+    margin: 10px;
+    margin-right: 10px;
+    font-size: medium;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
     .Container {
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 10px;
+        margin-bottom: 100px;
     }
 
     .roomItem {
@@ -125,20 +165,50 @@
     .Header {
         display: flex;
         flex-direction: column;
-        margin-inline: 0px;
+        justify-content: space-between;
+        align-items: center;
+        margin-inline: 50px;
+    }
+
+    .menuNav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .menuOpts {
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        gap: 40px;
+        background-color: #007bff;
+        padding: 10px;
+        border-radius: 6px;
+    }
+
+    .menuOpts li {
+        list-style: none;
+    }
+
+    .menuOpts li a {
+        display: inline-block;
+        text-decoration: none;
+        padding: 16px 0px;
+        color: #fff;
+    }
+
+    .menuOpts li a:hover {
+        color: #2565DC;
     }
 
     .selectFloor {
         display: flex;
-        align-self: flex-end;
-        border-radius: 6px;
-    }
-
-    .selectFloor select {
-        padding: 0;
-        margin: 0;
-        color: #2565DC;
-        font-size: x-large;
-        font-weight: 800;
+        align-self: center;
     }
 }
