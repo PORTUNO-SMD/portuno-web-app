@@ -79,12 +79,13 @@
 .groupLogoMenu {
     display: flex;
     flex-direction: column;
+    vertical-align: middle;
 }
 
 .Logo {
     display: flex;
     align-self: flex-start;
-    margin-top: 25px;
+    padding-block: 10px;
 }
 
 .Nav {
@@ -97,6 +98,7 @@
     justify-content: space-between;
     align-items: center;
     vertical-align: middle;
+    border-bottom: solid 0.5px #999999;
 }
 
 .menuOpts {
@@ -111,6 +113,10 @@
     color: #000;
 }
 
+.icons {
+    display: none;
+}
+
 .menuOpts li a:hover {
     color: #2565DC;
 }
@@ -122,6 +128,7 @@
 .selectFloor {
     display: flex;
     align-self: center;
+    margin-top: 20px;
 }
 
 .radioButton {
@@ -151,7 +158,11 @@
         border-radius: 15px;
         box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
         box-shadow: none;
-        margin: 10px;
+        margin: 5px;
+    }
+
+    .roomDetails {
+        flex-direction: column;
     }
 
     .showDetails {
@@ -159,7 +170,13 @@
     }
 
     .Logo {
-        display: none;
+        width: 150px;
+        align-self: center;
+        margin: 0;
+    }
+
+    .icons {
+        display: block;
     }
 
     .Header {
@@ -177,6 +194,7 @@
         flex-wrap: wrap;
         height: 100px;
         overflow: hidden;
+        border: none;
     }
 
     .menuOpts {
@@ -186,21 +204,27 @@
         bottom: 0;
         left: 0;
         right: 0;
-        gap: 40px;
+        margin: 0;
+        align-items: center;
+        padding: 0;
         background-color: #007bff;
-        padding: 10px;
-        border-radius: 6px;
+        border-radius: 10px 10px 0 0;
     }
 
     .menuOpts li {
+        display: flex;
+        align-self: center;
         list-style: none;
     }
 
     .menuOpts li a {
         display: inline-block;
         text-decoration: none;
-        padding: 16px 0px;
         color: #fff;
+    }
+
+    .menuOpts li a span {
+        display: none;
     }
 
     .menuOpts li a:hover {
@@ -210,5 +234,13 @@
     .selectFloor {
         display: flex;
         align-self: center;
+        margin: 0;
+    }
+
+    .radioButtonLabel {
+        margin: 10px;
+        margin-right: 10px;
+        font-size: small;
+        cursor: pointer;
     }
 }

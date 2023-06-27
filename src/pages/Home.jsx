@@ -4,10 +4,16 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head'; // Importe o componente Head
 import Style from "../styles/Home.module.css";
 import Room from '../components/room';
+import { AccountCircleRounded, BookmarkAddRounded, BookmarkRounded, CalendarMonth, HomeRounded, KeyRounded, ManageAccountsRounded } from '@mui/icons-material';
 
 const Home = () => {
     const router = useRouter();
     const sessionToken = Cookies.get('sessionToken');
+    const sessionUser = {
+        id: Cookies.get("sessionUserId"),
+        name: Cookies.get("sessionUserName"),
+        type: Cookies.get("sessionUserType")
+    }
     const [data, setData] = useState([]);
     const [classrooms, setClassrooms] = useState([]);
     const [floor, setFloor] = useState(0);
@@ -44,10 +50,46 @@ const Home = () => {
                     <img className={Style.Logo} src="assets/logotipo.svg" alt="Portuno" width="250px" />
                     <nav>
                         <ul className={Style.menuOpts}>
-                            <li><a href="">Home</a></li>
-                            <li><a href="">Ocupação</a></li>
-                            <li><a href="">Permissão</a></li>
-                            <li><a href="">Perfil</a></li>
+                            <li>
+                                <a href="">
+                                    <span>Home</span>
+                                    <HomeRounded className={Style.icons} alt={"home"} />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span>Horários</span>
+                                    <CalendarMonth className={Style.icons} alt={"horários"} />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <span>Reservas</span>
+                                    <BookmarkRounded className={Style.icons} alt={"reservas"} />
+                                </a>
+                            </li>
+                            {sessionUser.type === "professor" &&
+                                <li>
+                                    <a href="">
+                                        <span>Permissão</span>
+                                        <KeyRounded className={Style.icons} alt={"permissão"} />
+                                    </a>
+                                </li>
+                            }
+                            {sessionUser.name === "admin" &&
+                                <li>
+                                    <a href="">
+                                        <span>Gerenciamento</span>
+                                        <ManageAccountsRounded className={Style.icons} alt={"gerenciamento"} />
+                                    </a>
+                                </li>
+                            }
+                            <li>
+                                <a href="">
+                                    <span>Perfil</span>
+                                    <AccountCircleRounded className={Style.icons} alt={"perfil"} />
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
