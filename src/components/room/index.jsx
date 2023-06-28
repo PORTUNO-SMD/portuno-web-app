@@ -1,8 +1,8 @@
 import Style from "../../styles/Home.module.css";
 
-const Room = ({ classroom }) => {
+const Room = ({ classroom, handleRoomClick }) => {
     return (
-        <div className={Style.roomItem} data-value="terreo">
+        <div className={Style.roomItem} data-value="terreo" onClick={() => handleRoomClick(classroom)}>
             <h3 className={Style.nameRoom}>{classroom.short_name}</h3>
             <div className={Style.roomDetails}>
                 <div className={classroom.status == "avaliable" ? Style.avaliableStatus : Style.occupiedStatus}>

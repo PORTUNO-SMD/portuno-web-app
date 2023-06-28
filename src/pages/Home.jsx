@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head'; // Importe o componente Head
 import Style from "../styles/Home.module.css";
 import Room from '../components/room';
-import { AccountCircleRounded, BookmarkAddRounded, BookmarkRounded, CalendarMonth, HomeRounded, KeyRounded, ManageAccountsRounded } from '@mui/icons-material';
+import Navbar from '../components/navbar';
+import { Modal, Typography } from '@mui/material';
+import ModalRoom from '../components/room/Modal';
 
 const Home = () => {
     const router = useRouter();
@@ -17,6 +19,8 @@ const Home = () => {
     const [data, setData] = useState([]);
     const [classrooms, setClassrooms] = useState([]);
     const [floor, setFloor] = useState(0);
+    const [selectedRoom, setSelectedRoom] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (!sessionToken) {
@@ -28,6 +32,7 @@ const Home = () => {
         fetch('http://localhost:5000/classrooms')
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 setData(data.data);
                 setClassrooms(data.data.filter(classroom => classroom.floor == floor))
             })
@@ -40,6 +45,19 @@ const Home = () => {
         setClassrooms(data.filter(classroom => classroom.floor == floor))
     }, [floor])
 
+    const handleOpenModal = (room) => {
+        setSelectedRoom(room);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleRoomClick = (room) => {
+        handleOpenModal(room);
+    };
+
     return (
         <div>
             <Head>
@@ -48,50 +66,7 @@ const Home = () => {
             <header className={Style.Header}>
                 <div className={Style.menuNav}>
                     <img className={Style.Logo} src="assets/logotipo.svg" alt="Portuno" width="250px" />
-                    <nav>
-                        <ul className={Style.menuOpts}>
-                            <li>
-                                <a href="">
-                                    <span>Home</span>
-                                    <HomeRounded className={Style.icons} alt={"home"} />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span>Horários</span>
-                                    <CalendarMonth className={Style.icons} alt={"horários"} />
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <span>Reservas</span>
-                                    <BookmarkRounded className={Style.icons} alt={"reservas"} />
-                                </a>
-                            </li>
-                            {sessionUser.type === "professor" &&
-                                <li>
-                                    <a href="">
-                                        <span>Permissão</span>
-                                        <KeyRounded className={Style.icons} alt={"permissão"} />
-                                    </a>
-                                </li>
-                            }
-                            {sessionUser.name === "admin" &&
-                                <li>
-                                    <a href="">
-                                        <span>Gerenciamento</span>
-                                        <ManageAccountsRounded className={Style.icons} alt={"gerenciamento"} />
-                                    </a>
-                                </li>
-                            }
-                            <li>
-                                <a href="">
-                                    <span>Perfil</span>
-                                    <AccountCircleRounded className={Style.icons} alt={"perfil"} />
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <Navbar sessionUser={sessionUser} />
                 </div>
                 <div className={Style.selectFloor}>
                     <div className={Style.floorSelected}>
@@ -133,9 +108,10 @@ const Home = () => {
             </header>
             <div className={Style.Container}>
                 {classrooms && classrooms.map((classroom) => (
-                    <Room key={classroom.id} classroom={classroom} />
+                    <Room key={classroom.id} classroom={classroom} handleRoomClick={handleRoomClick} />
                 ))}
             </div>
+            <ModalRoom selectedRoom={selectedRoom} handleCloseModal={handleCloseModal} isModalOpen={isModalOpen} />
         </div>
     );
 };
