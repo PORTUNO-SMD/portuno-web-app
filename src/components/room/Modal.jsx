@@ -18,6 +18,7 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
     console.log(selectedRoom)
     const router = useRouter();
     const isOccupancy = Cookies.get("occupancy") ? true : false;
+    console.log(isOccupancy)
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
     function handleOccupationClick() {
@@ -118,7 +119,7 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
                                 </Table>
                             </TableContainer>
                             <div style={{ textAlign: 'center' }}>
-                                {(isOccupancy && isOccupancy != selectedRoom.id && !selectedRoom.user) &&
+                                {(isOccupancy && !selectedRoom.user) &&
                                     <Typography variant="body2" marginTop={2}>
                                         Você já está ocupando uma sala!
                                     </Typography>

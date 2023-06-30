@@ -66,6 +66,7 @@ const Perfil = () => {
                 }),
             });
             if(response.ok){
+                Cookies.set("sessionUserName", nome)
                 router.reload();
             }
         } catch (error) {
