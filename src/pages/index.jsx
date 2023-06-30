@@ -25,11 +25,16 @@ const StartPage = () => {
 
       const data = await response.json();
       if (data.authorization) {
+        // Limpar todos os cookies existentes
+        Object.keys(Cookies.get()).forEach((cookie) => {
+          Cookies.remove(cookie);
+        });
+        // Definir os novos cookies
         Cookies.set('sessionToken', data.authorization);
         Cookies.set('sessionUserId', data.user.id);
         Cookies.set('sessionUserName', data.user.name);
-        Cookies.set('sessionUserType', data.user.isProfessor ? "professor" : "user");
-        router.push('Home');
+        Cookies.set('sessionUserType', data.user.isProfessor ? 'professor' : 'user');
+        router.push('/Home');
       } else {
         setErrorMessage(data.message);
         setTimeout(() => {

@@ -1,7 +1,35 @@
-import { AccountCircleRounded, BookmarkAddRounded, BookmarkRounded, CalendarMonth, HomeRounded, KeyRounded, ManageAccountsRounded } from '@mui/icons-material';
+import { AccountCircleRounded, BookmarkRounded, CalendarMonth, HomeRounded, KeyRounded, ManageAccountsRounded } from '@mui/icons-material';
 import Style from "../../styles/Home.module.css";
 
 const Navbar = ({ sessionUser }) => {
+    const renderPermissionLink = () => {
+        if (sessionUser.type === "professor") {
+            return (
+                <li>
+                    <a href="">
+                        <span>Permissão</span>
+                        <KeyRounded className={Style.icons} alt={"permissão"} />
+                    </a>
+                </li>
+            );
+        }
+        return null;
+    };
+
+    const renderManagementLink = () => {
+        if (sessionUser.name === "admin") {
+            return (
+                <li>
+                    <a href="">
+                        <span>Gerenciamento</span>
+                        <ManageAccountsRounded className={Style.icons} alt={"gerenciamento"} />
+                    </a>
+                </li>
+            );
+        }
+        return null;
+    };
+
     return (
         <nav>
             <ul className={Style.menuOpts}>
@@ -23,22 +51,8 @@ const Navbar = ({ sessionUser }) => {
                         <BookmarkRounded className={Style.icons} alt={"reservas"} />
                     </a>
                 </li>
-                {sessionUser.type === "professor" &&
-                    <li>
-                        <a href="">
-                            <span>Permissão</span>
-                            <KeyRounded className={Style.icons} alt={"permissão"} />
-                        </a>
-                    </li>
-                }
-                {sessionUser.name === "admin" &&
-                    <li>
-                        <a href="">
-                            <span>Gerenciamento</span>
-                            <ManageAccountsRounded className={Style.icons} alt={"gerenciamento"} />
-                        </a>
-                    </li>
-                }
+                {renderPermissionLink()}
+                {renderManagementLink()}
                 <li>
                     <a href="">
                         <span>Perfil</span>
@@ -48,6 +62,6 @@ const Navbar = ({ sessionUser }) => {
             </ul>
         </nav>
     );
-}
+};
 
 export default Navbar;

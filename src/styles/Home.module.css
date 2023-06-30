@@ -34,7 +34,8 @@
 }
 
 .occupiedStatus,
-.avaliableStatus {
+.avaliableStatus,
+.occupingStatus {
     display: flex;
     padding: 5px 10px;
     flex-direction: column;
@@ -63,6 +64,16 @@
     color: #000;
     font-size: 12px;
     font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 1.25px;
+}
+
+.occupingStatus {
+    border-radius: 50px;
+    background: #2565DC;
+    color: #f1f1f1;
+    font-size: 12px;
+    font-weight: 700;
     line-height: 16px;
     letter-spacing: 1.25px;
 }
@@ -115,6 +126,7 @@
 
 .icons {
     display: none;
+    color: transparent;
 }
 
 .menuOpts li a:hover {
@@ -147,13 +159,34 @@
     padding: 20px;
     border-radius: 8px;
     outline: none;
-    width: 400px;
+    width: 300px;
     max-width: 100%;
     margin: 0 auto;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.ErrorMessage {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 20px;
+    width: 300px;
+    background-color: #E11B3F;
+    color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease-in-out;
+}
+
+.ErrorMessage p {
+    margin: 0;
+}
+
+.ErrorMessage.hide {
+    opacity: 0;
 }
 
 
@@ -192,6 +225,7 @@
 
     .icons {
         display: block;
+        color: #FFF;
     }
 
     .Header {
