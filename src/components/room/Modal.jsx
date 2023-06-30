@@ -27,7 +27,7 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
     const handleFinishOccupation = () => {
         console.log("Finalizar ocupação");
         const occupancyId = Cookies.get("occupancy");
-        fetch(`http://localhost:5000/occupancies/${occupancyId}`, {
+        fetch(`http://127.0.0.1:5000/occupancies/${occupancyId}`, {
             method: "PUT",
         })
             .then(response => {
@@ -52,7 +52,7 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
             class: null
         };
 
-        fetch('http://localhost:5000/occupancies', {
+        fetch('http://127.0.0.1:5000/occupancies', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

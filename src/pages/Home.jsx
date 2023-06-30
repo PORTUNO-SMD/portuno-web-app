@@ -20,6 +20,21 @@ const Home = () => {
     const { pending, error, data } = useFetch('http://localhost:5000/classrooms');
 
     useEffect(() => {
+        if (data && sessionToken) {
+            fetch(`http://127.0.0.1:5000/occupancies/user/${Cookies.get('sessionUserId')}`)
+                .then(response => response.json())
+                .then(occupancyData => {
+                    if (occupancyData.message === "Occupancy not found") {
+                        Cookies.remove("occupancy");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [data, sessionToken]);
+
+    useEffect(() => {
         if (!sessionToken) {
             router.push('/');
         }

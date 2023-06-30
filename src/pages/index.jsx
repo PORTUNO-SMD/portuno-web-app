@@ -8,7 +8,10 @@ import Cookies from 'js-cookie';
 const StartPage = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
-
+  /**
+   * Função cria autorização e seta as variáveis de sessão
+   * além de verificar se o usuário não está ocupando alguma sala 
+   * */
   const handleSubmit = async (event) => {
     event.preventDefault();
     const matricula = event.target.elements.matricula.value;
@@ -25,7 +28,6 @@ const StartPage = () => {
 
       const data = await response.json();
       if (data.authorization) {
-        // Limpar todos os cookies existentes
         Object.keys(Cookies.get()).forEach((cookie) => {
           Cookies.remove(cookie);
         });
@@ -34,6 +36,13 @@ const StartPage = () => {
         Cookies.set('sessionUserId', data.user.id);
         Cookies.set('sessionUserName', data.user.name);
         Cookies.set('sessionUserType', data.user.isProfessor ? 'professor' : 'user');
+        const occupancyResponse = await fetch(`http://127.0.0.1:5000/occupancies/user/${data.user.id}`);
+        const occupancyData = await occupancyResponse.json();
+        console.log(occupancyData);
+        if (occupancyData.data.classroom) {
+          Cookies.set("occupancy", occupancyData.data.classroom);
+        }
+
         router.push('/Home');
       } else {
         setErrorMessage(data.message);
