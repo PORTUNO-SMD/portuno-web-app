@@ -6,8 +6,8 @@ const Navbar = ({ sessionUser }) => {
         if (sessionUser.type === "professor") {
             return (
                 <li>
-                    <a href="">
-                        <span>Permissão</span>
+                    <a href="/Permissoes">
+                        <span>Permissões</span>
                         <KeyRounded className={Style.icons} alt={"permissão"} />
                     </a>
                 </li>
@@ -20,7 +20,7 @@ const Navbar = ({ sessionUser }) => {
         if (sessionUser.name === "admin") {
             return (
                 <li>
-                    <a href="">
+                    <a href="/Gerenciamento">
                         <span>Gerenciamento</span>
                         <ManageAccountsRounded className={Style.icons} alt={"gerenciamento"} />
                     </a>
@@ -34,19 +34,19 @@ const Navbar = ({ sessionUser }) => {
         <nav>
             <ul className={Style.menuOpts}>
                 <li>
-                    <a href="">
+                    <a href="/Home">
                         <span>Home</span>
                         <HomeRounded className={Style.icons} alt={"home"} />
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="/Horarios">
                         <span>Horários</span>
                         <CalendarMonth className={Style.icons} alt={"horários"} />
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="/Reservas">
                         <span>Reservas</span>
                         <BookmarkRounded className={Style.icons} alt={"reservas"} />
                     </a>
@@ -54,7 +54,7 @@ const Navbar = ({ sessionUser }) => {
                 {renderPermissionLink()}
                 {renderManagementLink()}
                 <li>
-                    <a href="">
+                    <a href="/Perfil">
                         <span>Perfil</span>
                         <AccountCircleRounded className={Style.icons} alt={"perfil"} />
                     </a>

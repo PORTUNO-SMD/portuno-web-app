@@ -124,11 +124,11 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
                                     </Typography>
                                 }
                                 <Button
-                                    variant="contained"
+                                    variant={Cookies.get("sessionUserName") === selectedRoom.user ? "outlined" : "contained"}
                                     color={Cookies.get("sessionUserName") === selectedRoom.user ? "secondary" : "primary"}
                                     disabled={Cookies.get("sessionUserName") === selectedRoom.user ? false : selectedRoom.status === 'occupied' || isOccupancy}
                                     onClick={Cookies.get("sessionUserName") === selectedRoom.user ? handleFinishOccupation : handleOccupationClick}
-                                    style={{ marginTop: 15 }}
+                                    style={Cookies.get("sessionUserName") === selectedRoom.user ? { color: "#f00", border: "0.4px solid #f00", marginTop: 15 } : { marginTop: 15 }}
                                 >
                                     {Cookies.get("sessionUserName") === selectedRoom.user ? "Finalizar ocupação" : "Ocupar Sala"}
                                 </Button>

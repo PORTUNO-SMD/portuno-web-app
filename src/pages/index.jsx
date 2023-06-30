@@ -39,9 +39,10 @@ const StartPage = () => {
         const occupancyResponse = await fetch(`http://127.0.0.1:5000/occupancies/user/${data.user.id}`);
         const occupancyData = await occupancyResponse.json();
         console.log(occupancyData);
-        if (occupancyData.data.classroom) {
-          Cookies.set("occupancy", occupancyData.data.classroom);
-        }
+        if (occupancyData.data && occupancyData.data.classroom)
+          if (occupancyData.data.classroom) {
+            Cookies.set("occupancy", occupancyData.data.classroom);
+          }
 
         router.push('/Home');
       } else {
