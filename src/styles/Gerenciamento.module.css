@@ -1,0 +1,38 @@
+/* Estilo das abas */
+.tabsContainer {
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tab {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    padding: 10px;
+    transition: border-bottom-color 0.3s ease;
+}
+
+.tabActive {
+    border-bottom-color: #007bff;
+}
+
+/* Estilo do conteúdo da aba */
+.tabContent {
+    padding: 20px;
+}
+
+/* Estilo do título das abas */
+.heading {
+    color: #007bff;
+}

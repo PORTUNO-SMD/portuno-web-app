@@ -39,12 +39,12 @@ const Navbar = ({ sessionUser }) => {
                         <HomeRounded className={Style.icons} alt={"home"} />
                     </a>
                 </li>
-                <li>
+                {/* <li>
                     <a href="/Horarios">
                         <span>Horários</span>
                         <CalendarMonth className={Style.icons} alt={"horários"} />
                     </a>
-                </li>
+                </li> */}
                 <li>
                     <a href="/Reservas">
                         <span>Reservas</span>
