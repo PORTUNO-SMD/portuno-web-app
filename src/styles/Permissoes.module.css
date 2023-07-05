@@ -1,0 +1,42 @@
+.formContainer {
+    max-width: 600px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.formField {
+    margin-top: 20px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.alertContainer {
+    margin: auto;
+    margin-top: 50px;
+}
+
+.alert {
+    background-color: #0585d2;
+    color: #f1f1f1;
+    width: 80%;
+    height: 30px;
+    font-size: 18px;
+    margin: auto;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.alertTitle {
+    color: #f1f1f1;
+    margin-top: 2px;
+}
+
+@media (max-width: 768px) {
+    .formContainer {
+        margin: 0;
+        font-size: medium;
+    }
+}
