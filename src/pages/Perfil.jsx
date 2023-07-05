@@ -16,11 +16,9 @@ const Perfil = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [password, setPassword] = useState();
 
-    useEffect(() => {
-        if (!sessionToken) {
-            router.push('/');
-        }
-    }, [router]);
+    if (!sessionToken) {
+        router.push('/');
+    }
 
     const { pending, error, data } = useFetch('http://localhost:5000/users/' + Cookies.get("sessionUserId"));
 
@@ -48,6 +46,14 @@ const Perfil = () => {
         setIsEditing(true);
     };
 
+    const handleLogout = () => {
+        Cookies.remove("sessionUserType");
+        Cookies.remove("sessionToken");
+        Cookies.remove("sessionUserId");
+        Cookies.remove("sessionUserName");
+        router.push("/");
+    };
+
     const handleSave = async () => {
         try {
             setIsEditing(false);
@@ -65,7 +71,7 @@ const Perfil = () => {
                     password: password
                 }),
             });
-            if(response.ok){
+            if (response.ok) {
                 Cookies.set("sessionUserName", nome)
                 router.reload();
             }
@@ -129,6 +135,11 @@ const Perfil = () => {
                         Editar
                     </Button>
                 )}
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+                <Button variant="text" onClick={handleLogout}>
+                    Sair da conta
+                </Button>
             </div>
         </div>
     );

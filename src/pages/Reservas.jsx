@@ -11,6 +11,10 @@ const Reservas = () => {
     const occupancyId = Cookies.get("occupancy");
     const apiUrl = `http://127.0.0.1:5000/classrooms/${occupancyId}`;
 
+    if (!sessionToken) {
+        router.push('/');
+    }
+
     useEffect(() => {
         const fetchClassroom = async () => {
             try {

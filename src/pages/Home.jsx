@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Style from "../styles/Home.module.css";
+import Style from '../styles/Home.module.css';
 import Room from '../components/room';
 import ModalRoom from '../components/room/Modal';
 import Header from '../components/head';
@@ -16,37 +16,37 @@ const Home = () => {
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [classrooms, setClassrooms] = useState([]);
+    const apiUrl = 'http://localhost:5000';
 
-    const { pending, error, data } = useFetch('http://localhost:5000/classrooms');
+    if (!sessionToken) {
+        router.push('/');
+    }
+
+    const { pending, error, data } = useFetch(`${apiUrl}/classrooms`);
 
     useEffect(() => {
         if (data && sessionToken) {
-            fetch(`http://127.0.0.1:5000/occupancies/user/${Cookies.get('sessionUserId')}`)
+            fetch(`${apiUrl}/occupancies/user/${Cookies.get('sessionUserId')}`)
                 .then(response => response.json())
                 .then(occupancyData => {
-                    if (occupancyData.message === "Occupancy not found") {
-                        Cookies.remove("occupancy");
+                    if (occupancyData.message === 'Occupancy not found') {
+                        Cookies.remove('occupancy');
                     }
                 })
                 .catch(error => {
-                    console.error(error);
+                    console.error('Erro ao buscar informações de ocupação:', error);
                 });
         }
     }, [data, sessionToken]);
 
     useEffect(() => {
-        if (!sessionToken) {
-            router.push('/');
-        }
-    }, [router]);
-
-    useEffect(() => {
         if (data) {
-            setClassrooms(data.data.filter(classroom => classroom.floor == floor));
+            const filteredClassrooms = data.data.filter(classroom => classroom.floor === floor);
+            setClassrooms(filteredClassrooms);
         }
     }, [data, floor]);
 
-    const handleOpenModal = (room) => {
+    const handleOpenModal = room => {
         setSelectedRoom(room);
         setIsModalOpen(true);
     };
@@ -55,27 +55,42 @@ const Home = () => {
         setIsModalOpen(false);
     };
 
-    const handleRoomClick = (room) => {
+    const handleRoomClick = room => {
         handleOpenModal(room);
+    };
+
+    const renderClassrooms = () => {
+        if (pending) {
+            return <CircularProgress color="primary" />;
+        }
+
+        if (error) {
+            return (
+                <div className={Style.ErrorMessage}>
+                    <p>{errorMessage}</p>
+                </div>
+            );
+        }
+
+        if (classrooms) {
+            return classrooms.map(classroom => (
+                <Room key={classroom.id} classroom={classroom} handleRoomClick={handleRoomClick} />
+            ));
+        }
+
+        return null;
     };
 
     return (
         <div>
             <Head>
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+                />
             </Head>
             <Header floor={floor} setFloor={setFloor} />
-            <div className={Style.Container}>
-                {pending && <CircularProgress color="primary" />}
-                {!pending && error &&
-                    <div className={Style.ErrorMessage}>
-                        <p>{errorMessage}</p>
-                    </div>
-                }
-                {!pending && !error && classrooms && classrooms.map((classroom) => (
-                    <Room key={classroom.id} classroom={classroom} handleRoomClick={handleRoomClick} />
-                ))}
-            </div>
+            <div className={Style.Container}>{renderClassrooms()}</div>
             <ModalRoom selectedRoom={selectedRoom} handleCloseModal={handleCloseModal} isModalOpen={isModalOpen} />
         </div>
     );

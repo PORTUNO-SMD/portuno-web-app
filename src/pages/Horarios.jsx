@@ -6,6 +6,10 @@ const Horarios = () => {
     const router = useRouter();
     const sessionToken = Cookies.get('sessionToken');
 
+    if (!sessionToken) {
+        router.push('/');
+    }
+
     return (
         <div>
             <Header hasFloor={false} />
