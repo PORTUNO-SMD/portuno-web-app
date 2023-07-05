@@ -43,6 +43,12 @@ const Home = () => {
         if (data) {
             const filteredClassrooms = data.data.filter(classroom => classroom.floor === floor);
             setClassrooms(filteredClassrooms);
+
+            if (classrooms) {
+                const names = data.data.map((classroom) => classroom.short_name)
+                Cookies.set("sessionClassrooms", names)
+            }
+            console.log(Cookies.get("sessionClassrooms"))
         }
     }, [data, floor]);
 

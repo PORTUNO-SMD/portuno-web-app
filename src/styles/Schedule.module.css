@@ -1,0 +1,19 @@
+.calendarContainer {
+    width: 100%;
+    height: 600px;
+}
+
+.calendar {
+    width: 100%;
+    height: 100%;
+}
+
+.calendar .calendar_default_event_inner {
+    background: #2e78d6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 10pt;
+    padding: 5px;
+    opacity: 0.8;
+}
