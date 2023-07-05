@@ -17,7 +17,7 @@ const Navbar = ({ sessionUser }) => {
     };
 
     const renderManagementLink = () => {
-        if (sessionUser.name === "admin") {
+        if (sessionUser.name === "Admin") {
             return (
                 <li>
                     <a href="/Gerenciamento">
