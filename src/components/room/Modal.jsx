@@ -13,6 +13,7 @@ import {
 import Cookies from "js-cookie";
 import ConfirmationDialog from "../confirm";
 import { useRouter } from "next/router";
+import { createInputFiles } from "typescript";
 
 const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
     console.log(selectedRoom)
@@ -20,6 +21,8 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
     const isOccupancy = Cookies.get("occupancy") ? true : false;
     console.log(isOccupancy)
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+    const [hasPermission, setHasPermission] = useState(false)
+    const [permissionMsg, setPermissionMsg] = useState();
 
     function handleOccupationClick() {
         setIsConfirmationOpen(true);
@@ -82,6 +85,34 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
         }
     }, [isConfirmationOpen]);
 
+    useEffect(() => {
+        setPermissionMsg()
+        if (selectedRoom && selectedRoom.professor) {
+            const currentDate = new Date();
+            fetch('http://127.0.0.1:5000/permissions')
+                .then(response => response.json())
+                .then(result => {
+                    result.data.forEach(permission => {
+                        const aTime = new Date(permission.beginning_time);
+                        const bTime = new Date(permission.ending_time);
+                        if (currentDate >= aTime && currentDate <= bTime) {
+                            if (Cookies.get("sessionUserId") == permission.user && permission.classroom == selectedRoom.id) {
+                                setHasPermission(true)
+                                setPermissionMsg("Você tem permissão para ocupar")
+                            } else {
+                                setHasPermission(false)
+                                setPermissionMsg("Essa sala precisa de permissão")
+                            }
+                        }
+                    })
+                })
+                .catch(error => {
+                    console.error('Error fetching permissions:', error);
+                });
+        }
+    }, [selectedRoom]);
+
+
     return (
         <>
             <Modal open={isModalOpen} onClose={handleCloseModal}>
@@ -124,11 +155,18 @@ const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
                                         Você já está ocupando uma sala!
                                     </Typography>
                                 }
+                                {permissionMsg &&
+                                    <Typography variant="body2" marginTop={2}>
+                                        {permissionMsg}
+                                    </Typography>
+                                }
                                 <Button
                                     variant={Cookies.get("sessionUserName") === selectedRoom.user ? "outlined" : "contained"}
                                     color={Cookies.get("sessionUserName") === selectedRoom.user ? "secondary" : "primary"}
-                                    disabled={Cookies.get("sessionUserName") === selectedRoom.user ? false : selectedRoom.status === 'occupied' || isOccupancy}
-                                    onClick={Cookies.get("sessionUserName") === selectedRoom.user ? handleFinishOccupation : handleOccupationClick}
+                                    disabled={
+                                        (Cookies.get("sessionUserName") === selectedRoom.user ? false : selectedRoom.status === 'occupied' || isOccupancy) ||
+                                        (selectedRoom.professor && !hasPermission)
+                                    } onClick={Cookies.get("sessionUserName") === selectedRoom.user ? handleFinishOccupation : handleOccupationClick}
                                     style={Cookies.get("sessionUserName") === selectedRoom.user ? { color: "#f00", border: "0.4px solid #f00", marginTop: 15 } : { marginTop: 15 }}
                                 >
                                     {Cookies.get("sessionUserName") === selectedRoom.user ? "Finalizar ocupação" : "Ocupar Sala"}

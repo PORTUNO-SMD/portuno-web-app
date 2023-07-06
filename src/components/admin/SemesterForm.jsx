@@ -15,13 +15,31 @@ const SemesterForm = () => {
             name: semesterName,
         };
 
-        console.log(semesterData);
-
-        // Limpar o formulário após o envio
-        setSemesterName("");
-        setStartDate("");
-        setEndDate("");
+        fetch("http://127.0.0.1:5000/semesters", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(semesterData),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    // Success
+                    alert("Semester registration successful!");
+                    setSemesterName("");
+                    setStartDate("");
+                    setEndDate("");
+                } else {
+                    // Failure
+                    alert("Semester registration failed!");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("An error occurred while registering the semester.");
+            });
     };
+
 
     return (
         <form onSubmit={handleSubmit}>

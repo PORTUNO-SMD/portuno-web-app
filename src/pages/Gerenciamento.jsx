@@ -15,19 +15,19 @@ const Gerenciamento = () => {
         <div>
             <Header hasFloor={false} />
             <Tabs value={activeTab} onChange={handleTabChange} style={{ marginLeft: "50px" }}>
-                <Tab label="Gerenciamento de Usuários" />
-                <Tab label="Gerenciamento de Semestre" />
-                {/* <Tab label="Gerenciamento de Aulas" /> */}
+                <Tab label="Cadastrar Usuário" />
+                <Tab label="Deletar Usuário" />
+                <Tab label="Cadastrar Semestre" />
             </Tabs>
             <TabPanel value={activeTab} index={0}>
-                <UserForm />
+                <UserForm key={1} />
             </TabPanel>
             <TabPanel value={activeTab} index={1}>
+                <UserForm key={2} option="delete" />
+            </TabPanel>
+            <TabPanel value={activeTab} index={2}>
                 <SemesterForm />
             </TabPanel>
-            {/* <TabPanel value={activeTab} index={2}> */}
-                {/* Formulário de Aulas */}
-            {/* </TabPanel> */}
         </div>
     );
 };
