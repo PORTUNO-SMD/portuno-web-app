@@ -13,7 +13,6 @@ import {
 import Cookies from "js-cookie";
 import ConfirmationDialog from "../confirm";
 import { useRouter } from "next/router";
-import { createInputFiles } from "typescript";
 
 const ModalRoom = ({ selectedRoom, isModalOpen, handleCloseModal }) => {
     console.log(selectedRoom)
